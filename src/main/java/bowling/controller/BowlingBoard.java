@@ -4,7 +4,7 @@ import bowling.domain.Board;
 import bowling.domain.Player;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Round;
-import bowling.domain.turn.FallenPins;
+import bowling.domain.turn.Pins;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
@@ -45,7 +45,7 @@ public class BowlingBoard {
     Frame tailFrame = round.tail();
     if (!tailFrame.checkFinished()) {
       int fallenPins = inputView.setupPins(board.runningFrame());
-      round.addNewBall(new FallenPins(fallenPins));
+      round.addNewBall(new Pins(fallenPins));
       resultView.printBoard(round);
     }
   }

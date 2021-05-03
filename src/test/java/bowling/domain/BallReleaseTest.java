@@ -1,7 +1,7 @@
 package bowling.domain;
 
 import bowling.domain.turn.BallRelease;
-import bowling.domain.turn.FallenPins;
+import bowling.domain.turn.Pins;
 import bowling.error.InvalidFallenPinsException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -16,8 +16,8 @@ class BallReleaseTest {
   @CsvSource(value = {"1,9", "2,8"})
   @DisplayName("두 번째 샷 추가 확인")
   void addingOtherPinCheckTest(int firstShotPins, int secondShotPins) {
-    FallenPins firstShot = new FallenPins(firstShotPins);
-    FallenPins secondShot = new FallenPins(secondShotPins);
+    Pins firstShot = new Pins(firstShotPins);
+    Pins secondShot = new Pins(secondShotPins);
 
     BallRelease ballRelease = new BallRelease(firstShot);
 
@@ -28,8 +28,8 @@ class BallReleaseTest {
   @CsvSource(value = {"1,10", "2,9"})
   @DisplayName("두 번째 샷 추가 실패")
   void invalidAddingTest(int firstShotPins, int secondShotPins) {
-    FallenPins firstShot = new FallenPins(firstShotPins);
-    FallenPins secondShot = new FallenPins(secondShotPins);
+    Pins firstShot = new Pins(firstShotPins);
+    Pins secondShot = new Pins(secondShotPins);
 
     BallRelease ballRelease = new BallRelease(firstShot);
 

@@ -1,7 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.turn.BallRelease;
-import bowling.domain.turn.FallenPins;
+import bowling.domain.turn.Pins;
 
 import java.util.List;
 
@@ -12,14 +12,14 @@ public class FinalFrame extends Frame {
   }
 
   @Override
-  public List<BallRelease> shot(FallenPins fallenPins) {
-    checkThrowable(fallenPins);
-    ballReleases.add(new BallRelease(fallenPins));
+  public List<BallRelease> shot(Pins pins) {
+    checkThrowable(pins);
+    ballReleases.add(new BallRelease(pins));
     return ballReleases;
   }
 
   @Override
-  protected void checkThrowable(FallenPins pins) {
+  protected void checkThrowable(Pins pins) {
     if (ballReleases.size() <= MAX_THROWABLE_BALLS && fallenPinsStatus() == MAX_FALLEN_PINS) {
       return;
     }

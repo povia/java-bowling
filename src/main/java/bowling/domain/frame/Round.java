@@ -1,7 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.Player;
-import bowling.domain.turn.FallenPins;
+import bowling.domain.turn.Pins;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +46,7 @@ public class Round {
     return size() == FINAL_ROUND && tail().checkFinished();
   }
 
-  public void addNewBall(FallenPins pins) {
+  public void addNewBall(Pins pins) {
     Frame frame = tail();
     frame.shot(pins);
   }

@@ -1,7 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.turn.BallRelease;
-import bowling.domain.turn.FallenPins;
+import bowling.domain.turn.Pins;
 import bowling.error.CannotMakeFrameException;
 import bowling.error.CannotThrowBallException;
 
@@ -39,9 +39,9 @@ public abstract class Frame {
     return ballReleases.stream().findFirst().orElse(null);
   }
 
-  public List<BallRelease> shot(FallenPins fallenPins) {
-    checkThrowable(fallenPins);
-    ballReleases.add(new BallRelease(fallenPins));
+  public List<BallRelease> shot(Pins pins) {
+    checkThrowable(pins);
+    ballReleases.add(new BallRelease(pins));
     return ballReleases;
   }
 
@@ -52,7 +52,7 @@ public abstract class Frame {
       .sum();
   }
 
-  protected void checkThrowable(FallenPins pins) {
+  protected void checkThrowable(Pins pins) {
     if (ballReleases.size() >= MAX_THROWABLE_BALLS) {
       throw new CannotThrowBallException();
     }

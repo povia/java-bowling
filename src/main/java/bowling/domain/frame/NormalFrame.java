@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.turn.FallenPins;
+import bowling.domain.turn.Pins;
 
 public class NormalFrame extends Frame {
 
@@ -9,7 +9,7 @@ public class NormalFrame extends Frame {
   }
 
   @Override
-  protected void checkThrowable(FallenPins pins) {
+  protected void checkThrowable(Pins pins) {
     super.checkThrowable(pins);
   }
 

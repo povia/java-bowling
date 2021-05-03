@@ -3,7 +3,7 @@ package bowling.view;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Round;
 import bowling.domain.turn.BallRelease;
-import bowling.domain.turn.FallenPins;
+import bowling.domain.turn.Pins;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -88,11 +88,11 @@ public class ResultView {
 
   private String spareToString(List<BallRelease> ballReleases) {
     StringBuilder stringBuilder = new StringBuilder();
-    FallenPins firstShot = ballReleases.get(ZERO).fallenPins();
+    Pins firstShot = ballReleases.get(ZERO).fallenPins();
 
     stringBuilder.append(firstShot.pins()).append(WALL).append(SPARE);
     if (ballReleases.size() > MAX_SHOT_PER_FRAME) {
-      FallenPins lastPins = ballReleases.get(ballReleases.size() - 1).fallenPins();
+      Pins lastPins = ballReleases.get(ballReleases.size() - 1).fallenPins();
       stringBuilder.append(WALL).append(lastPins.pins());
     }
 

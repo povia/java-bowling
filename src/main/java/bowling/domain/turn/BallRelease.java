@@ -3,18 +3,18 @@ package bowling.domain.turn;
 import java.util.Objects;
 
 public class BallRelease {
-  private final FallenPins fallenPins;
+  private final Pins pins;
 
-  public BallRelease(FallenPins fallenPins) {
-    this.fallenPins = fallenPins;
+  public BallRelease(Pins pins) {
+    this.pins = pins;
   }
 
-  public boolean checkAddable(FallenPins fallenPins) {
-    return this.fallenPins.checkAddable(fallenPins);
+  public boolean checkAddable(Pins pins) {
+    return this.pins.checkAddable(pins);
   }
 
-  public FallenPins fallenPins() {
-    return fallenPins;
+  public Pins fallenPins() {
+    return pins;
   }
 
   @Override
@@ -22,15 +22,15 @@ public class BallRelease {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     BallRelease that = (BallRelease) o;
-    return Objects.equals(fallenPins, that.fallenPins);
+    return Objects.equals(pins, that.pins);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(fallenPins);
+    return Objects.hash(pins);
   }
 
   public boolean isStrike() {
-    return fallenPins.isStrike();
+    return pins.isStrike();
   }
 }
