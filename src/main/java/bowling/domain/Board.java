@@ -1,7 +1,7 @@
 package bowling.domain;
 
 import bowling.domain.frame.Frame;
-import bowling.domain.frame.Round;
+import bowling.domain.frame.PlayerPanel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,29 +10,29 @@ public class Board {
   private static final int FIRST_ROUND = 1;
   private static final int ROUND_ADDING_NUMBER = 1;
 
-  private final List<Round> rounds;
+  private final List<PlayerPanel> playerPanels;
   private int roundNumber;
 
   public Board() {
-    rounds = new ArrayList<>();
+    playerPanels = new ArrayList<>();
     roundNumber = FIRST_ROUND;
   }
 
-  public void makeFirstFrame(Round round) {
-    round.add(Frame.of(roundNumber));
+  public void makeFirstFrame(PlayerPanel playerPanel) {
+    playerPanel.add(Frame.of(roundNumber));
   }
 
   public void addingFrame() {
     roundNumber += ROUND_ADDING_NUMBER;
-    rounds.stream().forEach(round -> round.add(round.tail().makeNextRound()));
+    playerPanels.stream().forEach(playerPanel -> playerPanel.add(playerPanel.tail().makeNextRound()));
   }
 
   public int size() {
-    return rounds.size();
+    return playerPanels.size();
   }
 
-  public List<Round> rounds() {
-    return rounds;
+  public List<PlayerPanel> rounds() {
+    return playerPanels;
   }
 
   public int runningFrame() {
@@ -40,22 +40,22 @@ public class Board {
   }
 
   public void addRound(Player player) {
-    Round round = new Round(player);
-    makeFirstFrame(round);
-    rounds.add(round);
+    PlayerPanel playerPanel = new PlayerPanel(player);
+    makeFirstFrame(playerPanel);
+    playerPanels.add(playerPanel);
   }
 
   public boolean checkCurrentFrameDone() {
-    long frameFinishedRounds = rounds.stream().filter(round -> round.checkCurrentRoundFinished()).count();
+    long frameFinishedRounds = playerPanels.stream().filter(playerPanel -> playerPanel.checkCurrentRoundFinished()).count();
     long roundsSize = size();
     return frameFinishedRounds == roundsSize;
   }
 
   public boolean checkFinished() {
-    long finishedCount = rounds.stream()
-      .filter(round -> round.checkFinished())
+    long finishedCount = playerPanels.stream()
+      .filter(playerPanel -> playerPanel.checkFinished())
       .count();
-    long fullSize = rounds.size();
+    long fullSize = playerPanels.size();
     return finishedCount == fullSize;
   }
 }

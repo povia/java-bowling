@@ -1,5 +1,6 @@
 package bowling.domain.turn;
 
+import bowling.domain.GameScore;
 import bowling.error.InvalidFallenPinsException;
 
 import java.util.Objects;
@@ -35,6 +36,10 @@ public class Pins {
     int addedPins = pins + secondPins.pins;
     checkPins(addedPins);
     return addedPins;
+  }
+
+  public GameScore addScore(GameScore score){
+    return score.bowl(pins);
   }
 
   public boolean isSpare(Pins secondPins){

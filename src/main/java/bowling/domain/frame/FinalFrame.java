@@ -1,57 +1,66 @@
 package bowling.domain.frame;
 
-import bowling.domain.turn.BallRelease;
+import bowling.domain.GameScore;
+import bowling.domain.state.State;
+import bowling.domain.state.running.Ready;
 import bowling.domain.turn.Pins;
 
-import java.util.List;
+import java.util.LinkedList;
 
 public class FinalFrame extends Frame {
 
-  protected FinalFrame(int round) {
-    super(round);
+  private LinkedList<State> states;
+
+  public FinalFrame(){
+    states = new LinkedList<>();
+    states.add(new Ready());
   }
 
+
   @Override
-  public List<BallRelease> shot(Pins pins) {
+  // TODO
+  public Frame shot(Pins pins) {
     checkThrowable(pins);
-    ballReleases.add(new BallRelease(pins));
-    return ballReleases;
+//    ballReleases.add(new BallRelease(pins));
+//    return ballReleases;
+    return null;
   }
 
   @Override
+  // TODO
   protected void checkThrowable(Pins pins) {
-    if (ballReleases.size() <= MAX_THROWABLE_BALLS && fallenPinsStatus() == MAX_FALLEN_PINS) {
-      return;
-    }
-    super.checkThrowable(pins);
+    currentState().isFinished();
+//    super.checkThrowable(pins);
   }
 
   @Override
+  // TODO
+  public Frame makeNextRound() {
+    return null;
+  }
+
+  @Override
+  // TODO
   public boolean checkFinished() {
-    if (super.isStrike() || super.isSpare()) {
-      return false;
-    }
-
-    return ballReleases.size() >= MAX_THROWABLE_BALLS || fallenPinsStatus() >= MAX_FALLEN_PINS;
-  }
-
-  @Override
-  public boolean isStrike() {
-    if (ballReleases.size() >= STRIKE_SIZE) {
-      return head().isStrike();
-    }
+//    GameScore score =
+//
+//    return ballReleases.size() >= MAX_THROWABLE_BALLS || fallenPinsStatus() >= MAX_FALLEN_PINS;
     return false;
   }
 
-  @Override
-  public boolean isSpare() {
-    if (ballReleases.size() >= MAX_THROWABLE_BALLS) {
-      return calculateFirstAndSecondShot(ballReleases) == MAX_FALLEN_PINS;
+  public GameScore calcScore() {
+    GameScore score = states.getFirst().score();
+    for (int i = 1; i < states.size(); i++) {
+      score = states.get(i).bonusScore(score);
     }
-    return super.isSpare();
+    return score;
   }
 
-  private int calculateFirstAndSecondShot(List<BallRelease> ballReleases) {
-    return ballReleases.get(0).fallenPins().pins() + ballReleases.get(1).fallenPins().pins();
+  private State currentState(){
+    return states.getLast();
   }
+  // TODO
+//  private int calculateFirstAndSecondShot(List<BallRelease> ballReleases) {
+//    return ballReleases.get(0).fallenPins().pins() + ballReleases.get(1).fallenPins().pins();
+//  }
 }

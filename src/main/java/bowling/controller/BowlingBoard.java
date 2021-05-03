@@ -3,7 +3,7 @@ package bowling.controller;
 import bowling.domain.Board;
 import bowling.domain.Player;
 import bowling.domain.frame.Frame;
-import bowling.domain.frame.Round;
+import bowling.domain.frame.PlayerPanel;
 import bowling.domain.turn.Pins;
 import bowling.view.InputView;
 import bowling.view.ResultView;
@@ -28,25 +28,26 @@ public class BowlingBoard {
     playGame();
   }
 
+  // TODO
   private void playGame() {
-    while (!board.checkFinished()) {
-      playRound(board);
-    }
+//    while (!board.checkFinished()) {
+//      playFrame(board);
+//    }
   }
 
   private void playRound(Board board) {
     checkAndAddingFrame();
-    for (Round round : board.rounds()) {
-      playFrame(round);
+    for (PlayerPanel playerPanel : board.rounds()) {
+      playFrame(playerPanel);
     }
   }
 
-  private void playFrame(Round round) {
-    Frame tailFrame = round.tail();
+  private void playFrame(PlayerPanel playerPanel) {
+    Frame tailFrame = playerPanel.tail();
     if (!tailFrame.checkFinished()) {
       int fallenPins = inputView.setupPins(board.runningFrame());
-      round.addNewBall(new Pins(fallenPins));
-      resultView.printBoard(round);
+      playerPanel.addNewBall(new Pins(fallenPins));
+      resultView.printBoard(playerPanel);
     }
   }
 
