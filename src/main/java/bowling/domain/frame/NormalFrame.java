@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.turn.FallenPins;
+import bowling.domain.turn.Pins;
 
 public class NormalFrame extends Frame {
 
@@ -9,13 +9,13 @@ public class NormalFrame extends Frame {
   }
 
   @Override
-  protected void checkThrowable(FallenPins pins) {
+  protected void checkThrowable(Pins pins) {
     super.checkThrowable(pins);
   }
 
   @Override
   public boolean checkFinished() {
-    return ballReleases.size() >= MAX_THROWABLE_BALLS || fallenPinsStatus() >= MAX_FALLEN_PINS;
+    return fallenPins.size() >= MAX_THROWABLE_BALLS || fallenPinsStatus() >= MAX_FALLEN_PINS;
   }
 
 }

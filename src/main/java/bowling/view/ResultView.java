@@ -1,9 +1,8 @@
 package bowling.view;
 
 import bowling.domain.frame.Frame;
-import bowling.domain.frame.Round;
-import bowling.domain.turn.BallRelease;
-import bowling.domain.turn.FallenPins;
+import bowling.domain.frame.PlayerBoard;
+import bowling.domain.turn.Pins;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,14 +34,14 @@ public class ResultView {
     return String.valueOf(pinCount);
   }
 
-  public void printBoard(Round round) {
+  public void printBoard(PlayerBoard playerBoard) {
     System.out.println();
     System.out.println(SCORE_TITLE);
 
-    printName(round.playerName());
+    printName(playerBoard.playerName());
 
     int remainRounds = 10;
-    for (Frame frame : round.frames()) {
+    for (Frame frame : playerBoard.frames()) {
       printFrame(frame);
       remainRounds--;
     }
@@ -71,12 +70,12 @@ public class ResultView {
     StringBuilder stringBuilder = new StringBuilder();
     String result;
 
-    result = frame.ballReleases().stream()
-      .map(ballRelease -> ballRelease.fallenPins().pins())
+    result = frame.fallenPins().stream()
+      .map(pins -> pins.pins())
       .map(ResultView::getShotResult)
       .collect(Collectors.joining(WALL));
 
-    List<BallRelease> balls = frame.ballReleases();
+    List<Pins> balls = frame.fallenPins();
 
     if (frame.isSpare()) {
       result = spareToString(balls);
@@ -86,13 +85,13 @@ public class ResultView {
     return stringBuilder.toString();
   }
 
-  private String spareToString(List<BallRelease> ballReleases) {
+  private String spareToString(List<Pins> fallenPins) {
     StringBuilder stringBuilder = new StringBuilder();
-    FallenPins firstShot = ballReleases.get(ZERO).fallenPins();
+    Pins firstShot = fallenPins.get(ZERO);
 
     stringBuilder.append(firstShot.pins()).append(WALL).append(SPARE);
-    if (ballReleases.size() > MAX_SHOT_PER_FRAME) {
-      FallenPins lastPins = ballReleases.get(ballReleases.size() - 1).fallenPins();
+    if (fallenPins.size() > MAX_SHOT_PER_FRAME) {
+      Pins lastPins = fallenPins.get(fallenPins.size() - 1);
       stringBuilder.append(WALL).append(lastPins.pins());
     }
 

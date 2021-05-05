@@ -1,19 +1,19 @@
 package bowling.domain.frame;
 
 import bowling.domain.Player;
-import bowling.domain.turn.FallenPins;
+import bowling.domain.turn.Pins;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Round {
+public class PlayerBoard {
   private static final int ZERO = 0;
   private static final int FINAL_ROUND = 10;
 
   private final List<Frame> frames;
   private final Player player;
 
-  public Round(Player player) {
+  public PlayerBoard(Player player) {
     frames = new ArrayList<>();
     this.player = player;
   }
@@ -46,7 +46,7 @@ public class Round {
     return size() == FINAL_ROUND && tail().checkFinished();
   }
 
-  public void addNewBall(FallenPins pins) {
+  public void addNewBall(Pins pins) {
     Frame frame = tail();
     frame.shot(pins);
   }

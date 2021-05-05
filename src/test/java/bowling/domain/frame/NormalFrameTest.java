@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.turn.FallenPins;
+import bowling.domain.turn.Pins;
 import bowling.error.CannotMakeFrameException;
 import bowling.error.CannotThrowBallException;
 import org.assertj.core.api.Assertions;
@@ -42,8 +42,8 @@ class NormalFrameTest {
   @DisplayName("2번 합해서 10 이내는 무조건 성공")
   void validTest(int firstShot, int secondShot) {
     Frame frame = Frame.of(1);
-    frame.shot(new FallenPins(firstShot));
-    frame.shot(new FallenPins(secondShot));
+    frame.shot(new Pins(firstShot));
+    frame.shot(new Pins(secondShot));
 
     Assertions.assertThat(frame.fallenPinsStatus()).isEqualTo(firstShot + secondShot);
   }
@@ -53,9 +53,9 @@ class NormalFrameTest {
   @DisplayName("2번 합해서 10 초과는 무조건 실패")
   void invalidPinsTest(int firstShot, int secondShot) {
     Frame frame = Frame.of(1);
-    frame.shot(new FallenPins(firstShot));
+    frame.shot(new Pins(firstShot));
 
-    Assertions.assertThatThrownBy(() -> frame.shot(new FallenPins(secondShot)))
+    Assertions.assertThatThrownBy(() -> frame.shot(new Pins(secondShot)))
       .isInstanceOf(CannotThrowBallException.class);
   }
 
@@ -64,10 +64,10 @@ class NormalFrameTest {
   @DisplayName("3번은 무조건 실패")
   void invalidBallsTest(int firstShot, int secondShot, int thirdShot) {
     Frame frame = Frame.of(1);
-    frame.shot(new FallenPins(firstShot));
-    frame.shot(new FallenPins(secondShot));
+    frame.shot(new Pins(firstShot));
+    frame.shot(new Pins(secondShot));
 
-    Assertions.assertThatThrownBy(() -> frame.shot(new FallenPins(thirdShot)))
+    Assertions.assertThatThrownBy(() -> frame.shot(new Pins(thirdShot)))
       .isInstanceOf(CannotThrowBallException.class);
   }
 
@@ -75,7 +75,7 @@ class NormalFrameTest {
   @DisplayName("진행 확인")
   void runningTest() {
     Frame frame = Frame.of(1);
-    frame.shot(new FallenPins(1));
+    frame.shot(new Pins(1));
 
     Assertions.assertThat(frame.checkFinished()).isFalse();
   }
@@ -84,7 +84,7 @@ class NormalFrameTest {
   @DisplayName("종료 확인")
   void finishedTest() {
     Frame frame = Frame.of(1);
-    frame.shot(new FallenPins(10));
+    frame.shot(new Pins(10));
 
     Assertions.assertThat(frame.checkFinished()).isTrue();
   }
@@ -93,8 +93,8 @@ class NormalFrameTest {
   @DisplayName("종료 확인2")
   void finishedRoundTest() {
     Frame frame = Frame.of(1);
-    frame.shot(new FallenPins(5));
-    frame.shot(new FallenPins(1));
+    frame.shot(new Pins(5));
+    frame.shot(new Pins(1));
 
     Assertions.assertThat(frame.checkFinished()).isTrue();
   }
