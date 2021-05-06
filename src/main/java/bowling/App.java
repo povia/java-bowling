@@ -1,9 +1,9 @@
 package bowling;
 
-import bowling.controller.BowlingBoard;
+import bowling.controller.BowlingGame;
 
 public class App {
   public static void main(String... args) {
-    new BowlingBoard().run();
+    new BowlingGame().run();
   }
 }

@@ -1,49 +1,49 @@
 package bowling.domain.frame;
 
+import bowling.domain.frame.state.State;
 import bowling.domain.turn.Pins;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class FinalFrame extends Frame {
+  LinkedList<State> states;
 
-  protected FinalFrame(int round) {
-    super(round);
+  protected FinalFrame() {
+    states = new LinkedList<>();
   }
 
   @Override
-  protected void checkThrowable(Pins pins) {
-    if (fallenPins.size() <= MAX_THROWABLE_BALLS && fallenPinsStatus() == MAX_FALLEN_PINS) {
-      return;
-    }
-    super.checkThrowable(pins);
+  public Frame bowl(Pins pins) {
+    return null;
   }
 
   @Override
   public boolean checkFinished() {
-    if (super.isStrike() || super.isSpare()) {
-      return false;
-    }
-
-    return fallenPins.size() >= MAX_THROWABLE_BALLS || fallenPinsStatus() >= MAX_FALLEN_PINS;
-  }
-
-  @Override
-  public boolean isStrike() {
-    if (fallenPins.size() >= STRIKE_SIZE) {
-      return head().isStrike();
-    }
     return false;
   }
 
   @Override
-  public boolean isSpare() {
-    if (fallenPins.size() >= MAX_THROWABLE_BALLS) {
-      return calculateFirstAndSecondShot(fallenPins) == MAX_FALLEN_PINS;
-    }
-    return super.isSpare();
+  public int round() {
+    return 10;
   }
 
-  private int calculateFirstAndSecondShot(List<Pins> fallenPins) {
-    return fallenPins.get(0).pins() + fallenPins.get(1).pins();
+  @Override
+  public int getScore() {
+
+    for(int i = 1; i< states.size(); i++){
+
+    }
+    return 0;
+  }
+
+  @Override
+  public int calculateAdditionalScore(Score beforeScore) {
+    return 0;
+  }
+
+  @Override
+  public Result createResult() {
+    return null;
   }
 }

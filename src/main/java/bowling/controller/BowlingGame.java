@@ -8,15 +8,13 @@ import bowling.domain.turn.Pins;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
-public class BowlingBoard {
-  private static final int FIRST_ROUND = 1;
-
+public class BowlingGame {
   private final InputView inputView;
   private final ResultView resultView;
   private final Board board;
 
 
-  public BowlingBoard() {
+  public BowlingGame() {
     inputView = new InputView();
     resultView = new ResultView();
     board = new Board();
@@ -35,7 +33,6 @@ public class BowlingBoard {
   }
 
   private void playRound(Board board) {
-    checkAndAddingFrame();
     for (PlayerBoard playerBoard : board.rounds()) {
       playFrame(playerBoard);
     }
@@ -44,15 +41,10 @@ public class BowlingBoard {
   private void playFrame(PlayerBoard playerBoard) {
     Frame tailFrame = playerBoard.tail();
     if (!tailFrame.checkFinished()) {
-      int fallenPins = inputView.setupPins(board.runningFrame());
+      int fallenPins = inputView.setupPins(tailFrame.round());
       playerBoard.addNewBall(new Pins(fallenPins));
       resultView.printBoard(playerBoard);
     }
   }
 
-  private void checkAndAddingFrame() {
-    if (board.checkCurrentFrameDone()) {
-      board.addingFrame();
-    }
-  }
 }

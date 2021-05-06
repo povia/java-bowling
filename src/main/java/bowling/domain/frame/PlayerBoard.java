@@ -8,34 +8,23 @@ import java.util.List;
 
 public class PlayerBoard {
   private static final int ZERO = 0;
+  private static final int FIRST_ROUND = 1;
   private static final int FINAL_ROUND = 10;
 
-  private final List<Frame> frames;
+  private Frame currentFrame;
   private final Player player;
 
   public PlayerBoard(Player player) {
-    frames = new ArrayList<>();
+    currentFrame = Frame.of(FIRST_ROUND);
     this.player = player;
   }
 
-  public List<Frame> frames() {
-    return frames;
-  }
-
-  public void add(Frame frame) {
-    frames.add(frame);
-  }
-
   public Frame tail() {
-    return frames.get(frames.size() - 1);
+    return currentFrame;
   }
 
   public int size() {
-    return frames.size();
-  }
-
-  public boolean isEmpty() {
-    return frames.size() == ZERO;
+    return currentFrame.round();
   }
 
   public boolean checkCurrentRoundFinished() {
@@ -47,8 +36,7 @@ public class PlayerBoard {
   }
 
   public void addNewBall(Pins pins) {
-    Frame frame = tail();
-    frame.shot(pins);
+    currentFrame = currentFrame.bowl(pins);
   }
 
   public String playerName() {
